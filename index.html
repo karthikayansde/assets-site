@@ -95,11 +95,7 @@
       saveButton.className = 'save-btn';
       saveButton.textContent = 'Copy Link';
       saveButton.onclick = () => {
-        navigator.clipboard.writeText(asset).then(() => {
-          alert(`Copied Link: ${asset}`);
-        }).catch(err => {
-          console.error('Failed to copy: ', err);
-        });
+        navigator.clipboard.writeText(asset);
       };
 
       assetItem.appendChild(preview);
