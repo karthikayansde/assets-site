@@ -1,18 +1,113 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asset Preview and Save Link</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    .asset-item {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+    .preview {
+      width: 250px;
+      height: 250px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #ccc;
+      background-color: #f9f9f9;
+    }
+    .preview img, .preview video {
+      max-width: 100%;
+      max-height: 100%;
+    }
+    .save-btn {
+      padding: 5px 10px;
+      border: none;
+      background-color: #007bff;
+      color: white;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .save-btn:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
 <body>
+  <h1>Asset List</h1>
+  <div id="asset-list"></div>
 
-<h1>My First Heading</h1>
-<p>My first paragraph.</p>
-<a href="https://karthikayansde.github.io/assets-site/assets/Screenshot 2024-12-07 202646.png" >https://karthikayansde.github.io/assets-site/assets/Screenshot 2024-12-07 202646.png</a>
-</br>
-<a href="https://karthikayansde.github.io/assets-site/assets/Screenshot 2024-12-07 202722.png" >https://karthikayansde.github.io/assets-site/assets/Screenshot 2024-12-07 202722.png</a>
-</br>
-<a href="https://karthikayansde.github.io/assets-site/assets/Screenshot 2024-12-07 203203.png" >https://karthikayansde.github.io/assets-site/assets/Screenshot 2024-12-07 203203.png</a>
-</br>
-<a href="https://karthikayansde.github.io/assets-site/assets/Screenshot 2024-12-07 203227.png" >https://karthikayansde.github.io/assets-site/assets/Screenshot 2024-12-07 203227.png</a>
-</br>
-<a href="https://karthikayansde.github.io/assets-site/assets/Screenshot 2024-12-07 203558.png" >https://karthikayansde.github.io/assets-site/assets/Screenshot 2024-12-07 203558.png</a>
-</br>
+  <script>
+    const endPoint = "https://karthikayansde.github.io/assets-site/";
+    const assets = [
+      endPoint+"assets/Screenshot 2024-12-07 202646.png" ,
+      endPoint+"assets/Screenshot 2024-12-07 202722.png" ,
+      endPoint+"assets/Screenshot 2024-12-07 203203.png" ,
+      endPoint+"assets/Screenshot 2024-12-07 203227.png" ,
+      endPoint+"assets/Screenshot 2024-12-07 203558.png" ,
+    ];
+
+    const assetList = document.getElementById('asset-list');
+
+    assets.forEach(asset => {
+      const assetItem = document.createElement('div');
+      assetItem.className = 'asset-item';
+
+      const preview = document.createElement('div');
+      preview.className = 'preview';
+
+      // Determine how to render the preview based on the file extension
+      const extension = asset.split('.').pop().toLowerCase();
+      if (['png', 'jpg', 'jpeg', 'gif'].includes(extension)) {
+        const img = document.createElement('img');
+        img.src = asset;
+        preview.appendChild(img);
+      } else if (['mp4', 'webm'].includes(extension)) {
+        const video = document.createElement('video');
+        video.src = asset;
+        video.controls = true;
+        preview.appendChild(video);
+      } else if (['mp3', 'wav'].includes(extension)) {
+        const audio = document.createElement('audio');
+        audio.src = asset;
+        audio.controls = true;
+        preview.appendChild(audio);
+      } else {
+        const fileText = document.createElement('span');
+        fileText.textContent = "No preview available";
+        preview.appendChild(fileText);
+      }
+
+      const link = document.createElement('a');
+      link.href = asset;
+      link.textContent = 'View Asset';
+      link.target = '_blank';
+
+      const saveButton = document.createElement('button');
+      saveButton.className = 'save-btn';
+      saveButton.textContent = 'Copy Link';
+      saveButton.onclick = () => {
+        navigator.clipboard.writeText(asset).then(() => {
+          alert(`Copied Link: ${asset}`);
+        }).catch(err => {
+          console.error('Failed to copy: ', err);
+        });
+      };
+
+      assetItem.appendChild(preview);
+      assetItem.appendChild(link);
+      assetItem.appendChild(saveButton);
+
+      assetList.appendChild(assetItem);
+    });
+  </script>
 </body>
 </html>
