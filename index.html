@@ -78,6 +78,8 @@
       endPoint+"assets/Group 4.svg" ,
       endPoint+"assets/Group 33.svg" ,
       endPoint+"assets/Group 22.svg" ,
+      endPoint+"assets/Karthi_Kayan_R_Flutter_Developer_Resume_Printable.pdf" ,
+      endPoint+"assets/Karthi_Kayan_R_Flutter_Developer_Resume.pdf" ,
       endPoint+"assets/Karthi_Kayan_R_Software_Developer_Resume.pdf" ,
       endPoint+"assets/Karthi_Kayan_R_Software_Developer_Resume_Printable.pdf" ,
     ];
@@ -125,9 +127,14 @@
         navigator.clipboard.writeText(asset);
       };
 
+      const nameP = document.createElement('p');
+      nameP.textContent = asset;
+      nameP.target = '_blank';
+
       assetItem.appendChild(preview);
       assetItem.appendChild(link);
       assetItem.appendChild(saveButton);
+      assetItem.appendChild(nameP);
 
       assetList.appendChild(assetItem);
     });
